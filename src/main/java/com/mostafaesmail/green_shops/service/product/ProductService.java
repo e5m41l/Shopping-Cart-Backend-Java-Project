@@ -3,6 +3,7 @@ package com.mostafaesmail.green_shops.service.product;
 import com.mostafaesmail.green_shops.Model.Category;
 import com.mostafaesmail.green_shops.Model.Product;
 import com.mostafaesmail.green_shops.exceptions.ProductNotFoundException;
+import com.mostafaesmail.green_shops.exceptions.ResourceNotFoundException;
 import com.mostafaesmail.green_shops.repository.CategoryRepository;
 import com.mostafaesmail.green_shops.repository.ProductRepository;
 import com.mostafaesmail.green_shops.requests.AddProductRequest;
@@ -64,7 +65,7 @@ public class ProductService implements IProductService {
         return productRepository.findById(id)
                 .map(existingProduct -> updateExistingProduct(existingProduct, request))
                 .map(productRepository:: save)
-                .orElseThrow(()-> new ProductNotFoundException("Product was not found!"));
+                .orElseThrow(()-> new ResourceNotFoundException("Product was not found!"));
     }
 
     private Product updateExistingProduct(Product existingProduct, UpdateProductRequest request) {
@@ -81,7 +82,7 @@ public class ProductService implements IProductService {
     }
     @Override
     public Product getProductById(Long id) {
-        return productRepository.findById(id).orElseThrow(()-> new ProductNotFoundException("Product not found!"));
+        return productRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Product not found!"));
     }
 
     @Override
